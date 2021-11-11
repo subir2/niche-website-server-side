@@ -56,7 +56,7 @@ app.get('/',(req,res)=>{
   
     app.post("/addOrders", async (req, res) => {
       const result = await ordersCollection.insertOne(req.body);
-      console.log(result);
+     
       res.send(result);
     });
   
@@ -96,7 +96,7 @@ app.get('/',(req,res)=>{
         const documents = await usersCollection.updateOne(filter, {
           $set: { role: "admin" },
         });
-        console.log(documents);
+      
       }
      
     });
@@ -106,30 +106,30 @@ app.get('/',(req,res)=>{
       const result = await usersCollection
         .find({ email: req.params.email })
         .toArray();
-      console.log(result);
+     
+      res.send(result);
+    });
+   
+  
+    /// all order
+    app.get("/allOrders", async (req, res) => {
+      // console.log("hello");
+      const result = await ordersCollection.find({status:"pending"}).toArray();
       res.send(result);
     });
   
-    /// all order
-    // app.get("/allOrders", async (req, res) => {
-    //   // console.log("hello");
-    //   const result = await ordersCollection.find({}).toArray();
-    //   res.send(result);
-    // });
-  
     // status update
-    // app.put("/statusUpdate/:id", async (req, res) => {
-    //   const filter = { _id: ObjectId(req.params.id) };
-    //   console.log(req.params.id);
-    //   const result = await ordersCollection.updateOne(filter, {
-    //     $set: {
-    //       status: req.body.status,
-    //     },
-    //   });
-    //   res.send(result);
-    //   console.log(result);
-    // });
-
+    app.put("/statusUpdate/:id", async (req, res) => {
+      const filter = { _id: (req.params.id) };
+      console.log(req.body.status);
+      const result = await ordersCollection.updateOne(filter, {
+        $set: {
+          status: "approved",
+        },
+      });
+      res.send(result);
+      console.log(result);
+    });
     //delete from MyBooking
     
     app.delete("/deleteorder/:id",async(req,res)=>{
@@ -140,9 +140,18 @@ app.get('/',(req,res)=>{
       res.send(result);
 
     })
+    app.delete("/deleteorderManager/:id",async(req,res)=>{
+      console.log(req.params.id);
+      const result= await ordersCollection.deleteOne({
+        _id:(req.params.id),
+      });
+      res.send(result);
+
+    })
 
   });
 
+  
 
    
 app.listen(port,()=>{
