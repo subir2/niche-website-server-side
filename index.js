@@ -120,7 +120,7 @@ app.get('/',(req,res)=>{
   
     // status update
     app.put("/statusUpdate/:id", async (req, res) => {
-      const filter = { _id: (req.params.id) };
+      const filter = { _id:ObjectId(req.params.id) };
       console.log(req.body.status);
       const result = await ordersCollection.updateOne(filter, {
         $set: {
@@ -135,7 +135,7 @@ app.get('/',(req,res)=>{
     app.delete("/deleteorder/:id",async(req,res)=>{
       console.log(req.params.id);
       const result= await ordersCollection.deleteOne({
-        _id:(req.params.id),
+        _id:ObjectId(req.params.id),
       });
       res.send(result);
 
@@ -143,8 +143,9 @@ app.get('/',(req,res)=>{
     app.delete("/deleteorderManager/:id",async(req,res)=>{
       console.log(req.params.id);
       const result= await ordersCollection.deleteOne({
-        _id:(req.params.id),
+        _id:ObjectId(req.params.id),
       });
+      
       res.send(result);
 
     })
@@ -152,7 +153,7 @@ app.get('/',(req,res)=>{
     app.delete("/deleteproductManager/:id",async(req,res)=>{
       console.log(req.params.id);
       const result= await servicesCollection.deleteOne({
-        _id:ObjectId(req.params.id),
+        _id:(req.params.id),
       });
       
       console.log(result);
