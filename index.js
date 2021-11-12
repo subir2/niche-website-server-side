@@ -128,7 +128,7 @@ app.get('/',(req,res)=>{
         },
       });
       res.send(result);
-      console.log(result);
+      // console.log(result);
     });
     //delete from MyBooking
     
@@ -149,8 +149,20 @@ app.get('/',(req,res)=>{
 
     })
 
+    app.delete("/deleteproductManager/:id",async(req,res)=>{
+      console.log(req.params.id);
+      const result= await servicesCollection.deleteOne({
+        _id:ObjectId(req.params.id),
+      });
+      
+      console.log(result);
+      res.send(result);
+
+    })
+
   });
 
+  
   
 
    
