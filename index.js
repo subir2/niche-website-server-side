@@ -161,7 +161,7 @@ app.get('/',(req,res)=>{
     app.delete("/deleteproductManager/:id",async(req,res)=>{
       console.log(req.params.id);
       const result= await servicesCollection.deleteOne({
-        _id:(req.params.id),
+        _id:ObjectId(req.params.id),
       });
       
       console.log(result);
