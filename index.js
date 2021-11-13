@@ -132,7 +132,7 @@ app.get('/',(req,res)=>{
       console.log(req.body.status);
       const result = await ordersCollection.updateOne(filter, {
         $set: {
-          status: "approved",
+          status: "shipped",
         },
       });
       res.send(result);
