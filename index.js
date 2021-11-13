@@ -77,6 +77,14 @@ app.get('/',(req,res)=>{
     });
   
 
+    //show Review
+
+    app.get("/showReview", async (req, res) => {
+      const result = await reviewCollection.find({}).toArray();
+      res.send(result);
+    });
+
+
     //User Create
 
     app.post("/addUserInfo", async (req, res) => {
